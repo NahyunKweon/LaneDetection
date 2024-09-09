@@ -3,43 +3,40 @@
 #picam.start()
 #picam.capture_file("image.jpg")
 
-import time
-from picamera import PiCamera
-from picamera.array import PiRGBArray
+from picamera2 import Picamera2, Preview
 from PIL import Image
 import io
+import time
 
-# 카메라 초기화
-camera = PiCamera()
-camera.resolution = (640, 480)
-camera.framerate = 30
+# Picamera2 객체 생성
+picam2 = Picamera2()
 
-# PiRGBArray 객체 생성
-rawCapture = PiRGBArray(camera, size=(640, 480))
+# 카메라 구성
+picam2.configure(picam2.create_still_configuration())
 
-# 카메라 초기화에 시간 지연 추가
-time.sleep(2)
+# 카메라 시작
+picam2.start()
+
+# 이미지 크기 설정
+width, height = 640, 480
 
 try:
-    # 카메라에서 프레임을 가져와서 실시간으로 보여줍니다.
-    for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-        image = frame.array
-        
+    while True:
+        # 이미지 캡처
+        image = picam2.capture_array()
+
         # 이미지를 PIL로 변환
         pil_image = Image.fromarray(image)
-        
+
         # 이미지를 화면에 표시
         pil_image.show()
-        
-        # rawCapture 배열을 초기화하여 다음 프레임 준비
-        rawCapture.truncate(0)
-        
-        # 이미지가 표시되기 전에 잠시 대기
-        time.sleep(0.03)  # 30ms 대기
+
+        # 잠시 대기 (디스플레이 갱신을 위한)
+        time.sleep(0.1)  # 100ms 대기
 
 except KeyboardInterrupt:
     pass
 
 finally:
-    # 모든 윈도우 닫기
-    pil_image.close()
+    # 카메라 정지
+    picam2.stop()
