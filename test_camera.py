@@ -12,6 +12,7 @@ picam2 = Picamera2()
 # 미리보기 활성화
 picam2.start_preview(Preview.QTGL)  # 미리보기 활성화, 적절한 옵션으로 설정
 preview_config = picam2.create_preview_configuration()
+capture_config = picam2.create_still_configuration()
 picam2.configure(preview_config)
 def capture_photos():
     count = 0
@@ -19,7 +20,9 @@ def capture_photos():
         count += 1
         photo_path = os.path.join(SAVE_FOLDER, f'image_{count}.jpg')
         try:
-            picam2.capture_file(photo_path)
+            picam2.switch_mode_and_capture_file(capture_config, photo_path)
+            
+            #picam2.capture_file(photo_path)
             print(f'Saved {photo_path}')
         except Exception as e:
             print(f'Error capturing image: {e}')
