@@ -10,8 +10,8 @@ SAVE_FOLDER = os.getcwd()
 picam2 = Picamera2()
 
 # 미리보기 활성화
-picam2.start_preview(Preview.QTGL)  # 미리보기 활성화, 적절한 옵션으로 설정
-preview_config = picam2.create_preview_configuration()
+picam2.start_preview(Preview.DRM, x=100, y=100, width=640, height=480)  # 미리보기 활성화, 적절한 옵션으로 설정
+preview_config = picam2.create_preview_configuration({"size": (640, 360)})
 capture_config = picam2.create_still_configuration()
 picam2.configure(preview_config)
 def capture_photos():
