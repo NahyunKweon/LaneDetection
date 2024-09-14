@@ -9,7 +9,7 @@ SAVE_FOLDER = os.getcwd()
 # 카메라 설정
 picam2 = Picamera2()
 picam2.configure(picam2.create_still_configuration())
-picam2.start_preview(Preview.FULLSCREEN)  # 미리보기 활성화
+picam2.start_preview(Preview.NULL)  # 미리보기 활성화
 
 # 사진 촬영 및 저장 함수
 def capture_photos():
