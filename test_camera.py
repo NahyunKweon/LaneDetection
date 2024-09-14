@@ -8,11 +8,11 @@ SAVE_FOLDER = os.getcwd()
 
 # 카메라 설정
 picam2 = Picamera2()
-picam2.configure(picam2.create_still_configuration())
 
 # 미리보기 활성화
 picam2.start_preview(Preview.QTGL)  # 미리보기 활성화, 적절한 옵션으로 설정
-
+preview_config = picam2.create_preview_configuration()
+picam2.configure(preview_config)
 def capture_photos():
     count = 0
     while True:
