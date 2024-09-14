@@ -9,16 +9,20 @@ SAVE_FOLDER = os.getcwd()
 # 카메라 설정
 picam2 = Picamera2()
 picam2.configure(picam2.create_still_configuration())
-picam2.start_preview(Preview.NULL)  # 미리보기 활성화
 
-# 사진 촬영 및 저장 함수
+# 미리보기 활성화
+picam2.start_preview(Preview.QTGL)  # 미리보기 활성화, 적절한 옵션으로 설정
+
 def capture_photos():
     count = 0
     while True:
         count += 1
         photo_path = os.path.join(SAVE_FOLDER, f'image_{count}.jpg')
-        picam2.capture_file(photo_path)
-        print(f'Saved {photo_path}')
+        try:
+            picam2.capture_file(photo_path)
+            print(f'Saved {photo_path}')
+        except Exception as e:
+            print(f'Error capturing image: {e}')
         time.sleep(5)  # 5초 대기
 
 if __name__ == '__main__':
