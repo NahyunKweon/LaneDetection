@@ -5,7 +5,7 @@ import os
 
 # 현재 작업 디렉토리 경로 가져오기
 SAVE_FOLDER = os.getcwd()
-
+#j6otYR0esZHr4gckrY4UE4C2JofQPi1aalwc
 # 카메라 설정
 picam2 = Picamera2()
 
